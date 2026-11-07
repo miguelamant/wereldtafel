@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>De Wereldtafel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F6F0E4;
+    --paper-soft: #FBF7EF;
+    --ink: #2E1A33;
+    --plum: #5B3260;
+    --plum-deep: #3B1F42;
+    --lavender: #C9AEDB;
+    --lavender-soft: #E7DBF0;
+    --gold: #E8A93A;
+    --gold-deep: #C6871E;
+    --line: #E3D5C3;
+    --display: "Fraunces", "Iowan Old Style", Georgia, serif;
+    --body: "Karla", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img{ max-width:100%; display:block; }
+
+  a{ color: inherit; }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  h1,h2,h3{
+    font-family: var(--display);
+    font-weight: 600;
+    color: var(--plum-deep);
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  p{ margin: 0; }
+
+  .btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 24px;
+    border-radius: 999px;
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 0.98rem;
+    text-decoration: none;
+    border: 2px solid transparent;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:focus-visible{ outline: 3px solid var(--gold); outline-offset: 2px; }
+  .btn-primary{
+    background: var(--plum);
+    color: var(--paper-soft);
+    box-shadow: 0 3px 0 var(--plum-deep);
+  }
+  .btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 5px 0 var(--plum-deep); }
+  .btn-secondary{
+    background: transparent;
+    color: var(--plum-deep);
+    border-color: var(--plum-deep);
+  }
+  .btn-secondary:hover{ transform: translateY(-2px); background: var(--lavender-soft); }
+
+  /* ---------- Header ---------- */
+  header{
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(246,240,228,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+  }
+  .brand{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .brand-name{
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--plum-deep);
+  }
+  .nav-link{
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    color: var(--plum-deep);
+  }
+
+  /* ---------- Logo mark ---------- */
+  .mark{
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--lavender);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .mark svg{ width: 24px; height: 24px; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding: 72px 0 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-inner{
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .eyebrow{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 18px;
+  }
+  .hero h1{
+    font-size: clamp(2.3rem, 4.2vw, 3.4rem);
+    line-height: 1.08;
+    margin-bottom: 20px;
+  }
+  .hero h1 em{
+    font-style: italic;
+    color: var(--plum);
+  }
+  .hero-sub{
+    font-size: 1.12rem;
+    max-width: 48ch;
+    color: #4A3650;
+    margin-bottom: 30px;
+  }
+  .hero-ctas{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .hero-art{
+    position: relative;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-sun{
+    width: min(360px, 90%);
+    height: min(360px, 90%);
+  }
+
+  /* ---------- Strip ---------- */
+  .strip{
+    background: var(--plum-deep);
+    color: var(--paper-soft);
+    padding: 14px 0;
+    overflow: hidden;
+  }
+  .strip-track{
+    display: flex;
+    gap: 40px;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.05rem;
+    white-space: nowrap;
+    color: var(--lavender-soft);
+  }
+
+  /* ---------- Section shared ---------- */
+  section{ padding: 72px 0; }
+  .section-head{
+    max-width: 62ch;
+    margin-bottom: 44px;
+  }
+  .kicker{
+    display: block;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 10px;
+  }
+  .section-head h2{
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    margin-bottom: 14px;
+  }
+  .section-head p{
+    font-size: 1.05rem;
+    color: #4A3650;
+  }
+
+  /* ---------- About ---------- */
+  .about{
+    background: var(--paper-soft);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .about-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  .about-text p + p{ margin-top: 16px; }
+  .about-text{ font-size: 1.06rem; color: #3A2740; }
+  .about-partner{
+    margin-top: 28px;
+    display: flex;
+    gap: 14px;
+    padding: 18px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+  }
+  .about-partner svg{ width: 30px; height: 30px; flex-shrink: 0; color: var(--plum); }
+  .about-partner strong{ color: var(--plum-deep); }
+  .about-partner span{ display:block; font-size: 0.92rem; color: #5A4A60; margin-top: 2px; }
+
+  .stat-cards{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .stat-card{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 22px 24px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .stat-card .ico{
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--lavender-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .stat-card .ico svg{ width: 24px; height: 24px; color: var(--plum); }
+  .stat-card h3{ font-size: 1.05rem; margin-bottom: 4px; }
+  .stat-card p{ font-size: 0.95rem; color: #5A4A60; }
+
+  /* ---------- Highlights ---------- */
+  .cards{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .card{
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 30px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .card .tag{
+    display: inline-flex;
+    align-self: flex-start;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    background: #FBF0DA;
+    padding: 5px 12px;
+    border-radius: 999px;
+  }
+  .card .ico-big{
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--plum-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card .ico-big svg{ width: 28px; height: 28px; color: var(--gold); }
+  .card h3{ font-size: 1.2rem; }
+  .card p{ color: #4A3650; font-size: 0.98rem; }
+
+  /* ---------- CTA band ---------- */
+  .cta-band{
+    background: var(--plum);
+    color: var(--paper-soft);
+    border-radius: 28px;
+    padding: 52px 48px;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 36px;
+    align-items: center;
+  }
+  .cta-band h2{ color: var(--paper-soft); font-size: clamp(1.6rem, 3vw, 2.1rem); margin-bottom: 14px; }
+  .cta-band p{ color: var(--lavender-soft); font-size: 1.03rem; max-width: 46ch; }
+  .cta-actions{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .cta-band .btn-primary{
+    background: var(--gold);
+    color: var(--plum-deep);
+    box-shadow: 0 3px 0 var(--gold-deep);
+    justify-content: center;
+  }
+  .cta-band .btn-primary:hover{ box-shadow: 0 5px 0 var(--gold-deep); }
+  .cta-band .btn-secondary{
+    border-color: var(--lavender-soft);
+    color: var(--paper-soft);
+    justify-content: center;
+  }
+  .cta-band .btn-secondary:hover{ background: rgba(255,255,255,0.08); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding: 40px 0 48px;
+    border-top: 1px solid var(--line);
+  }
+  .footer-inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-brand{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--display);
+    font-weight: 600;
+    color: var(--plum-deep);
+  }
+  .footer-meta{
+    font-size: 0.9rem;
+    color: #6B5C70;
+  }
+  .footer-links{
+    display: flex;
+    gap: 20px;
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+  .footer-links a{ text-decoration: none; color: var(--plum); }
+  .footer-links a:hover{ text-decoration: underline; }
+
+  @media (max-width: 860px){
+    .hero-inner{ grid-template-columns: 1fr; }
+    .hero-art{ order: -1; max-width: 280px; margin: 0 auto; }
+    .about-grid{ grid-template-columns: 1fr; }
+    .cards{ grid-template-columns: 1fr; }
+    .cta-band{ grid-template-columns: 1fr; padding: 36px 28px; }
+    .nav .nav-link{ display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="5.2" fill="#E8A93A"/>
+          <g stroke="#3B1F42" stroke-width="1.3" stroke-linecap="round">
+            <line x1="12" y1="1.6" x2="12" y2="4.2"/>
+            <line x1="12" y1="19.8" x2="12" y2="22.4"/>
+            <line x1="1.6" y1="12" x2="4.2" y2="12"/>
+            <line x1="19.8" y1="12" x2="22.4" y2="12"/>
+            <line x1="4.4" y1="4.4" x2="6.2" y2="6.2"/>
+            <line x1="17.8" y1="17.8" x2="19.6" y2="19.6"/>
+            <line x1="4.4" y1="19.6" x2="6.2" y2="17.8"/>
+            <line x1="17.8" y1="6.2" x2="19.6" y2="4.4"/>
+          </g>
+        </svg>
+      </span>
+      <span class="brand-name">De Wereldtafel</span>
+    </a>
+    <a class="nav-link" href="https://docs.google.com/forms/d/e/1FAIpQLScXrFbQTeJqLOwA8fYmQeUNb3DaL_uFQXEshLWIGwT6fMLQ8w/viewform" target="_blank" rel="noopener">Doe mee →</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ---------- HERO ---------- -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div>
+        <span class="eyebrow">Leuven · Kessel-Lo</span>
+        <h1>Koken met smaken uit <em>de hele wereld.</em></h1>
+        <p class="hero-sub">Studenten, nieuwkomers en buurtbewoners van alle leeftijden koken samen — en bouwen zo, gerecht per gerecht, aan één gedeeld Leuvens stadsgerecht.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLScXrFbQTeJqLOwA8fYmQeUNb3DaL_uFQXEshLWIGwT6fMLQ8w/viewform" target="_blank" rel="noopener">Doe mee als vrijwilliger</a>
+          <a class="btn btn-secondary" href="https://www.instagram.com/wereldtafel/" target="_blank" rel="noopener">Volg ons op Instagram</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg class="hero-sun" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="160" cy="160" r="150" fill="#E7DBF0"/>
+          <g stroke="#5B3260" stroke-width="5" stroke-linecap="round">
+            <line x1="160" y1="26" x2="160" y2="58"/>
+            <line x1="160" y1="262" x2="160" y2="294"/>
+            <line x1="26" y1="160" x2="58" y2="160"/>
+            <line x1="262" y1="160" x2="294" y2="160"/>
+            <line x1="60" y1="60" x2="82" y2="82"/>
+            <line x1="238" y1="238" x2="260" y2="260"/>
+            <line x1="60" y1="260" x2="82" y2="238"/>
+            <line x1="238" y1="82" x2="260" y2="60"/>
+          </g>
+          <circle cx="160" cy="160" r="78" fill="#E8A93A"/>
+          <circle cx="160" cy="160" r="78" fill="url(#g)" opacity="0.25"/>
+          <path d="M114 118 V 150 M114 118 L104 118 M114 150 L104 150 M114 134 H104" stroke="#3B1F42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none" transform="translate(0,4)"/>
+          <path d="M104 118 V 136 M114 118 V 136 M109 136 V 196" stroke="#3B1F42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M206 118 C 196 118 192 128 196 138 C 199 145 206 148 206 148 V 196" stroke="#3B1F42" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <defs>
+            <radialGradient id="g" cx="0.3" cy="0.3" r="0.8">
+              <stop stop-color="#FFF4D6"/>
+              <stop offset="1" stop-color="#E8A93A" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip" aria-hidden="true">
+    <div class="strip-track">
+      <span>Samen koken</span><span>·</span>
+      <span>Gedeelde recepten</span><span>·</span>
+      <span>Het Leuvens stadsgerecht</span><span>·</span>
+      <span>Met De Nomade</span><span>·</span>
+      <span>Voor heel Leuven</span><span>·</span>
+      <span>Samen koken</span><span>·</span>
+      <span>Gedeelde recepten</span><span>·</span>
+      <span>Het Leuvens stadsgerecht</span><span>·</span>
+      <span>Met De Nomade</span><span>·</span>
+      <span>Voor heel Leuven</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- ---------- ABOUT ---------- -->
+  <section class="about">
+    <div class="wrap about-grid">
+      <div>
+        <span class="kicker">Wat is De Wereldtafel</span>
+        <h2 style="margin-bottom:18px;">Eén tafel, recepten van overal</h2>
+        <div class="about-text">
+          <p>De Wereldtafel brengt mensen rond het fornuis samen die elkaar anders niet snel zouden ontmoeten: nieuwkomers, studenten, scholieren en buurtbewoners van alle leeftijden.</p>
+          <p>Op onze kookmiddagen brengt iedereen een recept, een techniek of gewoon zin om mee te doen mee. Wat daaruit ontstaat, groeit uit tot een gedeeld <strong>Leuvens stadsgerecht</strong> — gemaakt van ieders inbreng, voor iedereen om te proeven.</p>
+        </div>
+        <div class="about-partner">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 10.5L12 4l9 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 9.5V19a1 1 0 0 0 1 1h4v-5h4v5h4a1 1 0 0 0 1-1V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div>
+            <strong>In samenwerking met De Nomade</strong>
+            <span>Onthaalcentrum voor nieuwkomers · Koetshuis, Borstelsstraat 140, Kessel-Lo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-cards">
+        <div class="stat-card">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a7 7 0 0 0-7 7c0 4.2 7 13 7 13s7-8.8 7-13a7 7 0 0 0-7-7Z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg></span>
+          <div>
+            <h3>Rond de hoek</h3>
+            <p>Kookmiddagen bij De Nomade en op andere plekken in Kessel-Lo en Leuven.</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 20h2a2 2 0 0 0 2-2V8.5L15 4H6a2 2 0 0 0-2 2v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 12a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z" stroke="currentColor" stroke-width="1.6"/><path d="M8 14.5v3l2 1.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div>
+            <h3>Voor alle leeftijden</h3>
+            <p>Van scholieren tot senioren — iedereen die graag kookt en nieuwe mensen ontmoet is welkom.</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 21V9m0 0 8-6 8 6M4 9l8 6m0 0 8-6m-8 6v12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div>
+            <h3>Eindigt op straat</h3>
+            <p>Het resultaat wordt elk jaar geproefd door heel de buurt op het Nomadefeest.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- HIGHLIGHTS ---------- -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Hoe het eruitziet</span>
+        <h2>Van kookmiddag tot gedeeld feest</h2>
+        <p>Een greep uit wat er op een Wereldtafel-dag gebeurt.</p>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <span class="ico-big"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 10a6 6 0 0 1 12 0v1H6v-1Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 11h16l-1.2 7.2a2 2 0 0 1-2 1.8H7.2a2 2 0 0 1-2-1.8L4 11Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 5.5c0-1 .8-1.8.8-2.6M14 5.5c0-1-.8-1.8-.8-2.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+          <span class="tag">Samen koken</span>
+          <h3>Kookmiddagen vol nieuwe recepten</h3>
+          <p>Van Palestijnse keuken bij De Nomade tot verrassende combinaties die niemand had zien aankomen — telkens met de mensen die het recept meebrachten.</p>
+        </div>
+        <div class="card">
+          <span class="ico-big"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.6"/><path d="M8 10.5c1-1 2.3-1.5 4-1.5s3 .5 4 1.5M8.5 15c1 .8 2.1 1.2 3.5 1.2s2.5-.4 3.5-1.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+          <span class="tag">Het stadsgerecht</span>
+          <h3>Eén gerecht, vele handen</h3>
+          <p>Elk seizoen groeien de ideeën van de kookmiddagen uit tot één gedeeld "Leuvens stadsgerecht" — geproefd en goedgekeurd door iedereen die meekookte.</p>
+        </div>
+        <div class="card">
+          <span class="ico-big"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 20V11a1 1 0 0 1 .4-.8l7-5.4a1 1 0 0 1 1.2 0l7 5.4a1 1 0 0 1 .4.8v9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 20v-6h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="tag">Nomadefeest</span>
+          <h3>Geserveerd voor heel de buurt</h3>
+          <p>Het stadsgerecht wordt opgediend op het Nomadefeest in het Heuvelhofpark in Kessel-Lo — de kookmiddag van iedereen, geproefd door iedereen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- CTA ---------- -->
+  <section>
+    <div class="wrap">
+      <div class="cta-band">
+        <div>
+          <h2>Kom een keer meekoken</h2>
+          <p>Nieuwe data verschijnen eerst op Instagram. Wil je als vrijwilliger helpen — koken, opdienen of een handje toesteken — laat het ons weten via het formulier.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLScXrFbQTeJqLOwA8fYmQeUNb3DaL_uFQXEshLWIGwT6fMLQ8w/viewform" target="_blank" rel="noopener">Meld je aan als vrijwilliger</a>
+          <a class="btn btn-secondary" href="https://www.instagram.com/wereldtafel/" target="_blank" rel="noopener">@wereldtafel op Instagram</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <span class="mark" style="width:32px;height:32px;" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:18px;height:18px;">
+          <circle cx="12" cy="12" r="5.2" fill="#E8A93A"/>
+        </svg>
+      </span>
+      De Wereldtafel
+    </div>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/wereldtafel/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScXrFbQTeJqLOwA8fYmQeUNb3DaL_uFQXEshLWIGwT6fMLQ8w/viewform" target="_blank" rel="noopener">Vrijwilligersformulier</a>
+    </div>
+    <div class="footer-meta">i.s.m. De Nomade · Kessel-Lo, Leuven</div>
+  </div>
+</footer>
+
+</body>
+</html>
